@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/images/Logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Add this CSS to style the dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: #fff;
+            color: #333;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            z-index: 1;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f9f9f9;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <a href="index.html">
+                    <b><span class="company-name">Easy Grocs</span></b>
+                    <i class="fas fa-home"></i>
+                </a>
+            </div>
+            <div class="search-bar">
+                <a href="search.html">
+                    <input id="search-input" type="text" placeholder="Search...">
+                    <button id="search-button"><i class="fas fa-search"></i></button>
+                </a>
+            </div>
+            <div class="search-button-mobile">
+                <button id="mobileSearchButton"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </nav>
+    <nav class="category-navbar">
+        <div class="category-navbar-container">
+            <div class="dropdown">
+                <button class="dropbtn">Shop By Category <i class="fas fa-caret-down"></i></button>
+                <div class="dropdown-content">
+                    <a href="masala_product.html">Masala / Spices</a>
+                    <a href="snacks.html">Snacks</a>
+                    <a href="dairy_products.html">Dairy</a>
+                    <a href="electronics.html">Electronics</a>  
+                    <a href="soap_and_shampoo_products.html">Soap & Shampoo</a>
+                    <a href="cold_drinks_product.html">Cold Drinks</a>
+                    <a href="House_Holds_Products.html">House holds</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Add your container content here -->
+    </div>
+
+    <a href="cart.html" class="cart-button"><i class="fas fa-shopping-cart"></i></a> <!-- Link to cart.html with cart icon -->
+        
+    <script>
+        // Add this JavaScript to toggle the dropdown
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropbtn = document.querySelector('.dropbtn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+
+            // Function to toggle the dropdown
+            function toggleDropdown() {
+                dropdownContent.classList.toggle('show');
+            }
+
+            dropbtn.addEventListener('click', toggleDropdown);
+
+            // Close the dropdown if the user clicks outside of it
+            window.addEventListener('click', function (event) {
+                if (!event.target.matches('.dropbtn')) {
+                    if (dropdownContent.classList.contains('show')) {
+                        dropdownContent.classList.remove('show');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

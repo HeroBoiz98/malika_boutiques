@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type=text] {
+            padding: 10px;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .product {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            padding: 10px;
+            width: 150px;
+            height: 200px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .product-details {
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .product-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .product button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 12px;
+        }
+
+        .product button:hover {
+            background-color: #45a049;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 80%;
+            max-height: 80%;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .cart-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #cart_popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 128, 0, 0.8);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Product Page</h1>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" onclick="openSearch()" placeholder="Search for products...">
+    </div>
+
+    <div id="productContainer" style="display: flex; flex-wrap: wrap;">
+                
+        <div class="product" data-category="blouse" >
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsBAOvNZR7ODeN4mBrJ744WZvTGnIw_8MH4N1tHtpNGQ&s" alt="Product 2">
+            <div class="product-details">
+                <div class="product-name"> Blouse 1</div>
+                <div class="product-price">Rs.990</div>
+                <button onclick="addToCart(' Blouse - 1', 990.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="blouse" >
+            <img src="https://i.pinimg.com/564x/33/9d/0e/339d0e68e577beefbf9ee8ae615b83cd.jpg" alt="Product 2">
+            <div class="product-details">
+                <div class="product-name">Blouse 2</div>
+                <div class="product-price">Rs.990</div>
+                <button onclick="addToCart('Blouse - 2', 990.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="blouse" >
+            <img src="https://i.pinimg.com/736x/78/a1/b0/78a1b0184bf1d8237f28da70f15c71a3.jpg">
+            <div class="product-details">
+                <div class="product-name">Blouse 3</div>
+                <div class="product-price">Rs.990</div>
+                <button onclick="addToCart('Blouse - 3', 990.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="blouse" >
+            <img src="https://i.pinimg.com/736x/7c/62/33/7c62331678882dddc90b22593612f35e.jpg">
+            <div class="product-details">
+                <div class="product-name">Blouse 4</div>
+                <div class="product-price">Rs.990</div>
+                <button onclick="addToCart('Blouse - 4 ', 990.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="blouse" >
+            <img src="https://play-lh.googleusercontent.com/PpD-MGh_1q5b1tx5YMT9AYttqZxvLqw_Yk-xJeSPQyG6GUEPA5OjIMJsekKoAZsb2dE">
+            <div class="product-details">
+                <div class="product-name">Blouse 5</div>
+                <div class="product-price">Rs.990</div>
+                <button onclick="addToCart('Blouse - 5', 990.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="blouse" >
+            <img src="https://5.imimg.com/data5/FH/GO/WJ/SELLER-52978148/img-0097.JPG">
+            <div class="product-details">
+                <div class="product-name">Blouse 5</div>
+                <div class="product-price">Rs.990</div>
+                <button onclick="addToCart('Blouse - 5', 990.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="blouse" >
+            <img src="https://i.pinimg.com/736x/79/13/ad/7913addbe430cc6008bceb468b33d6b5.jpg">
+            <div class="product-details">
+                <div class="product-name">Blouse 6</div>
+                <div class="product-price">Rs.990</div>
+                <button onclick="addToCart('Blouse - 6', 990.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="blouse" >
+            <img src="https://i.pinimg.com/236x/18/8c/5d/188c5d1c1a6935da59e0485642a45c7d.jpg">
+            <div class="product-details">
+                <div class="product-name">Blouse 7</div>
+                <div class="product-price">Rs.990</div>
+                <button onclick="addToCart('Blouse - 7', 990.00)">Add to Cart</button>
+            </div>
+        </div>
+
+
+    <!-- Kurti Section  -->
+
+        <div class="product" data-category="kurti" >
+            <img src="https://www.jiomart.com/images/product/original/rvvdbamb45/mintmarie-women-s-green-embroidered-nayra-cut-kurti-xxl-product-images-rvvdbamb45-0-202303112019.jpg?im=Resize=(500,630)" alt="Product 2">
+            <div class="product-details">
+                <div class="product-name">Kurti - 1 </div>
+                <div class="product-price">Rs.550</div>
+                <button onclick="addToCart('Kurti - 1', 550.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="kurti" >
+            <img src="https://www.wholesaletextile.in/product-img/Ikkat-cotton-501-Casual-wear-c-1647682484.jpeg" alt="Product 2">
+            <div class="product-details">
+                <div class="product-name">Kurti - 2 </div>
+                <div class="product-price">Rs.550</div>
+                <button onclick="addToCart('Kurti - 2', 550.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="kurti" >
+            <img src="https://mahezon.in/cdn/shop/products/Untitled_design_4_15_1200x1200.png?v=1659810142" alt="Product 2">
+            <div class="product-details">
+                <div class="product-name">Kurti - 3 </div>
+                <div class="product-price">Rs.550</div>
+                <button onclick="addToCart('Kurti - 3', 550.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="kurti" >
+            <img src="https://www.jaipurfabric.com/uploads/jaipurfabric/products/jfk0208-475927_l.jpg" alt="Product 2">
+            <div class="product-details">
+                <div class="product-name">Kurti - 4 </div>
+                <div class="product-price">Rs.550</div>
+                <button onclick="addToCart('Kurti - 4', 550.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="kurti" >
+            <img src="https://assets.ajio.com/medias/sys_master/root/20230601/cnrp/6477ae5b42f9e729d702b151/-473Wx593H-465880314-yellow-MODEL3.jpg" alt="Product 2">
+            <div class="product-details">
+                <div class="product-name">Kurti - 4 </div>
+                <div class="product-price">Rs.550</div>
+                <button onclick="addToCart('Kurti - 4', 550.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="kurti" >
+            <img src="https://walusha.in/cdn/shop/files/6_017274e4-e3ea-4bed-9de9-7d7975a82026.jpg?v=1692770205&width=1445" alt="Product 2">
+            <div class="product-details">
+                <div class="product-name">Kurti - 5 </div>
+                <div class="product-price">Rs.550</div>
+                <button onclick="addToCart('Kurti - 5', 550.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="kurti" >
+            <img src="https://ik.imagekit.io/ldqsn9vvwgg/tr:w-540/readiprintfashions/images/1867126/7.jpg" alt="Product 2">
+            <div class="product-details">
+                <div class="product-name">Kurti - 6 </div>
+                <div class="product-price">Rs.550</div>
+                <button onclick="addToCart('Kurti - 6', 550.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="kurti" >
+            <img src="https://www.textileinfomedia.com/img/lgd/buy-front-slit-georgette-kurti-for-women-full.jpg" alt="Product 2">
+            <div class="product-details">
+                <div class="product-name">Kurti - 7 </div>
+                <div class="product-price">Rs.550</div>
+                <button onclick="addToCart('Kurti - 7', 550.00)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product" data-category="kurti" >
+            <img src="https://static.cilory.com/687858-thickbox_default/lace-detailed-cotton-printed-straight-kurti-by-kiasha.jpg.webp" alt="Product 2">
+            <div class="product-details">
+                <div class="product-name">Kurti - 8 </div>
+                <div class="product-price">Rs.550</div>
+                <button onclick="addToCart('Kurti - 8', 550.00)">Add to Cart</button>
+            </div>  
+        </div>
+
+    </div>
+</div>
+
+<a href="cart.html" class="cart-button"><i class="fas fa-shopping-cart"></i></a> <!-- Link to cart.html with cart icon -->
+
+<div id="searchPopup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closeSearch()">&times;</span>
+        <input type="text" id="searchInputPopup" onkeyup="searchProducts()" placeholder="Search for products...">
+        <div id="searchResults"></div>
+    </div>
+</div>
+
+<div id="cart_popup"></div>
+
+<script>
+    function addToCart(name, price) {
+        let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+        let found = false;
+        cartItems.forEach(item => {
+            if (item.name === name) {
+                item.quantity++;
+                found = true;
+            }
+        });
+
+        if (!found) {
+            cartItems.push({ name: name, price: price, quantity: 1 });
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cartItems));
+
+        // Show pop-up message
+        showCartPopup(name);
+    }
+
+    function showCartPopup(productName) {
+        const cartPopup = document.getElementById('cart_popup');
+        cartPopup.innerText = `${productName} added to cart!`;
+        cartPopup.style.display = 'block';
+
+        setTimeout(() => {
+            cartPopup.style.display = 'none';
+        }, 2000);
+    }
+
+    function openSearch() {
+        document.getElementById('searchPopup').style.display = 'flex';
+    }
+
+    function closeSearch() {
+        document.getElementById('searchPopup').style.display = 'none';
+    }
+
+    function searchProducts() {
+        let input, filter, products, productName, i;
+        input = document.getElementById('searchInputPopup');
+        filter = input.value.toUpperCase();
+        products = document.getElementById('productContainer').getElementsByClassName('product');
+        let searchResults = '';
+
+        for (i = 0; i < products.length; i++) {
+            productName = products[i].getElementsByClassName('product-name')[0];
+            if (productName.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                searchResults += products[i].outerHTML;
+            }
+        }
+
+        document.getElementById('searchResults').innerHTML = searchResults;
+    }
+    function categorizeAndStoreProducts() {
+    let products = document.getElementsByClassName('product');
+    let kurtiProducts = [];
+    let blouseProducts = [];
+    let drinkProducts = [];
+    let snackProducts = []; // Add a new array for snack products
+
+    for (let i = 0; i < products.length; i++) {
+        let category = products[i].getAttribute('data-category');
+        if (category === 'kurti') {
+            kurtiProducts.push(products[i].outerHTML);
+        } else if (category === 'blouse') {
+            blouseProducts.push(products[i].outerHTML);
+        } else if (category === 'drink') {
+            drinkProducts.push(products[i].outerHTML);
+        } else if (category === 'snack') { // Check for 'snack' category
+            snackProducts.push(products[i].outerHTML);
+        }
+    }
+
+    localStorage.setItem('kurtiProducts', JSON.stringify(kurtiProducts));
+    localStorage.setItem('blouseProducts', JSON.stringify(bouseProducts));
+    localStorage.setItem('drinkProducts', JSON.stringify(drinkProducts));
+    localStorage.setItem('snackProducts', JSON.stringify(snackProducts)); // Store snack products
+}
+
+// Call the function to categorize and store products when the page loads
+window.onload = categorizeAndStoreProducts;
+
+
+
+</script>
+
+</body>
+</html>

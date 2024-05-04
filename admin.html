@@ -1,0 +1,37 @@
+<script>
+    // Submit form event handler
+    document.querySelector('#checkoutForm').addEventListener('submit', function(e) {
+      // Prevent the default form submission behavior
+      e.preventDefault();
+  
+      // Validate phone number, name, and address fields
+      let phone = document.getElementById('phone').value;
+      let fullname = document.getElementById('fullname').value;
+      let address = document.getElementById('address').value;
+  
+      if (!phone || !fullname || !address) {
+        alert("Please fill in all required fields: Phone Number, Full Name, and Address.");
+      } else {
+        // Save form data to localStorage
+        const formData = {
+          fullname: fullname,
+          email: document.getElementById('email').value,
+          phone: phone,
+          address: address,
+          city: document.getElementById('city').value
+        };
+        localStorage.setItem('savedFormData', JSON.stringify(formData));
+  
+        // Redirect to admin.html with order information as query parameters
+        const orderNumber = generateOrderNumber(); // Generate a unique order number
+        const adminUrl = `admin.html?order=${orderNumber}&fullname=${encodeURIComponent(fullname)}&email=${encodeURIComponent(formData.email)}&phone=${encodeURIComponent(phone)}&address=${encodeURIComponent(address)}&city=${encodeURIComponent(formData.city)}`;
+        window.location.href = adminUrl;
+      }
+    });
+  
+    // Generate a unique order number
+    function generateOrderNumber() {
+      return Math.floor(Math.random() * 1000000); // Example: Random 6-digit order number
+    }
+  </script>
+  
